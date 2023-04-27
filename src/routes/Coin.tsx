@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 interface RouterParams {
   coinId: string;
@@ -33,11 +34,24 @@ interface RouteState {
 const Coin = () => {
   const [loading, setLoading] = useState(true);
   const { coinId } = useParams<RouterParams>();
-
   const { state } = useLocation<RouteState>();
+  const [info, setInfo] = useState({});
+  const [priceInfo, setPriceInfo] = useState({});
 
-  console.log(state);
+  useEffect(() => {
+    axios.get(`https://api.coinpaprika.com/v1/coins/${coinId}`).then((data) => {
+      setInfo(data.data);
+    });
 
+    axios
+      .get(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
+      .then((data) => {
+        setPriceInfo(data.data);
+      });
+  }, []);
+
+  console.log(info);
+  console.log(priceInfo);
   return (
     <Container>
       <Header>
