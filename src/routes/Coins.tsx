@@ -13,17 +13,23 @@ const Header = styled.header`
   align-items: center;
 `;
 
-const CoinsList = styled.ul``;
+const CoinsList = styled.ul`
+  display: flex;
+  flex-direction : column;
+  align-items: center;
+`;
 
 const Coin = styled.li`
   background-color: white;
+  width: 500px;
   color: ${(props) => props.theme.bgColor};
   border-radius: 15px;
   margin-bottom: 10px;
   a {
+    display: flex;
+    align-items: center;
     padding: 20px; // 텍스트의 padding에서도 클릭되게 하기
     transition: color 0.2s ease-in;
-    display: block; // 텍스트 밖까지 클릭되게 하기
   }
   &:hover {
     a {
@@ -39,8 +45,14 @@ const Title = styled.h1`
 
 const Loader = styled.span`
   text-align: center;
+`;
 
-`
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+`;
+
 interface CoinInterface {
   id: string;
   name: string;
@@ -62,7 +74,6 @@ const Coins = () => {
       setLoading(false);
     });
   }, []);
-
   console.log(coins);
   return (
     <Container>
@@ -75,7 +86,16 @@ const Coins = () => {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              <Link to={`/${coin.id}`}>
+                <Img
+                  alt="coinImg"
+                  src={
+                    "http://coinicons-api.vercel.app/api/icon/" +
+                    coin.symbol.toLowerCase()
+                  }
+                />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinsList>
