@@ -15,7 +15,7 @@ const Header = styled.header`
 
 const CoinsList = styled.ul`
   display: flex;
-  flex-direction : column;
+  flex-direction: column;
   align-items: center;
 `;
 
@@ -86,7 +86,12 @@ const Coins = () => {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>
+              <Link
+                to={{
+                  pathname: `/${coin.id}`,
+                  state: { name: coin.name },
+                }}
+              >
                 <Img
                   alt="coinImg"
                   src={
