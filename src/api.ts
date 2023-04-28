@@ -19,3 +19,12 @@ export const fetchCoinTickers = async (coinId:string) => {
   const json = response.data;
   return json;
 };
+
+export const fetchCoinHistory = async (coinId:string) => {
+  
+  const response = await axios.get(`https://ohlcv-api.nomadcoders.workers.dev?coinId=${coinId}`);
+  const json = response.data;
+  return json;
+};
+
+
